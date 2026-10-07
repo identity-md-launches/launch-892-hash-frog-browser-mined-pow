@@ -1,0 +1,34 @@
+{
+  "status": "prepared-not-deployed",
+  "kind": "univ4_hook",
+  "chainId": 1,
+  "token": {
+    "contract": "src/HFROG.sol:HFROG",
+    "constructorArgs": [],
+    "name": "HFROG",
+    "symbol": "HFROG",
+    "decimals": 18,
+    "supply": "1000000000000000000000000000"
+  },
+  "hook": {
+    "contract": "src/HashFrogHook.sol:HashFrogHook",
+    "constructorArgs": ["$poolManager", "$token", "$imd", 60],
+    "flags": "0x20cc"
+  },
+  "pool": {"pair": "IMD", "fee": 12500, "tickSpacing": 60},
+  "companions": {
+    "nftAndBurnVault": "hook.frog()",
+    "staking": "hook.staking()",
+    "router": "hook.router()"
+  },
+  "requiredCoordinatorInputs": [
+    "verified Ethereum PoolManager address",
+    "verified 18-decimal IMD address",
+    "launch factory address and its CREATE2 salt convention",
+    "factory-supplied launch token address",
+    "initial price, liquidity and factory allocation parameters",
+    "fork RPC and pinned mainnet block",
+    "independent review attestation",
+    "public HTTPS hosting destination"
+  ]
+}

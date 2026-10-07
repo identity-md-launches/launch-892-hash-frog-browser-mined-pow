@@ -1,0 +1,59 @@
+{
+  "date": "2026-10-07",
+  "solc": "0.8.26",
+  "evmVersion": "cancun",
+  "forgeBuild": "passed",
+  "forgeTest": {
+    "passed": 47,
+    "failed": 0,
+    "skipped": 0,
+    "fuzzRuns": 128,
+    "invariantRuns": 64,
+    "invariantDepth": 32
+  },
+  "forgeFmtCheck": "passed",
+  "suppliedProtectedChecks": {
+    "passed": 10,
+    "failed": 0,
+    "skipped": 0,
+    "note": "Self-executed unchanged in temporary scratch path with isolated public probe constructor arguments. Not an independent attestation."
+  },
+  "nodeUnitTests": {
+    "passed": 4,
+    "failed": 0
+  },
+  "localAnvilDOMIntegration": "passed",
+  "mainnetFork": "not run; verified launch IMD/PoolManager and RPC not supplied",
+  "publicRPCProbe": "eth_getCode to publicnode endpoint returned HTTP 403; no mainnet state attested",
+  "mainnetDeployment": "not performed",
+  "productionHosting": "not performed",
+  "gpuHardwareRun": "not performed; per-device known-answer self-test implemented",
+  "independentReview": "outstanding",
+  "contracts": {
+    "HFROG": {
+      "runtimeBytes": 1503,
+      "initcodeBytesWithoutArguments": 2424,
+      "sourceSha256": "01c0702401482147d6b8a4950510a592ea348b96b3730ff706871e2157a1dbf6"
+    },
+    "HashFrogHook": {
+      "runtimeBytes": 10120,
+      "initcodeBytesWithoutArguments": 37788,
+      "sourceSha256": "12ad0a5d4c8268ba6f93d95f75e604e56f61313e9f025e105a21f11de6cc81f2"
+    },
+    "HashFrog": {
+      "runtimeBytes": 16615,
+      "initcodeBytesWithoutArguments": 17818,
+      "sourceSha256": "59d173924233b29cbd78488369eb58bd410fdb7f72c7c54e43bcf0f7dfb05224"
+    },
+    "FrogStaking": {
+      "runtimeBytes": 4276,
+      "initcodeBytesWithoutArguments": 4609,
+      "sourceSha256": "13766d4b96101c823de2056b364f73c817153326b7ce8411af6e893541c6d2b5"
+    },
+    "FrogRouter": {
+      "runtimeBytes": 3464,
+      "initcodeBytesWithoutArguments": 3797,
+      "sourceSha256": "bbc3b538f861e0a0cc5faa92d683aec5b34df0c6f896e75d44b791f97bb35d7d"
+    }
+  }
+}

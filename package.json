@@ -1,0 +1,1 @@
+{"name":"hash-frog","private":true,"type":"module","scripts":{"test":"node --test test/site/*.test.mjs","miner:build":"python3 tools/generate-miner.py && node tools/build-miner.mjs"}}

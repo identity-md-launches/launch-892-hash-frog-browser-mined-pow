@@ -1,0 +1,43 @@
+[
+  {
+    "repository": "Uniswap/v4-core",
+    "commit": "46c6834698c48bc4a463a86d8420f4eb1d7f3b75",
+    "path": "lib/v4-core"
+  },
+  {
+    "repository": "foundry-rs/forge-std",
+    "commit": "77041d2ce690e692d6e03cc812b57d1ddaa4d505",
+    "path": "lib/forge-std"
+  },
+  {
+    "repository": "OpenZeppelin/openzeppelin-contracts",
+    "commit": "69c8def5f222ff96f2b5beff05dfba996368aa79",
+    "path": "lib/openzeppelin-contracts"
+  },
+  {
+    "repository": "transmissions11/solmate",
+    "commit": "89365b880c4f3c786bdd453d4b8e8fe410344a69",
+    "path": "lib/solmate"
+  },
+  {
+    "package": "ethers",
+    "version": "6.13.5",
+    "path": "site/vendor/ethers.js",
+    "license": "site/vendor/ethers.LICENSE.md",
+    "sha256": "08f3be0965c8cefc3225e840f84de0fb50aaa0564bd9867d78e3017207b432ae"
+  },
+  {
+    "package": "wabt",
+    "version": "1.0.37",
+    "path": "tools/vendor/wabt.cjs",
+    "license": "tools/vendor/wabt.LICENSE",
+    "sha256": "021f7a1f3609d46af0254404bba6d8ea1061904df9a687c650dc1416e46f59c9"
+  },
+  {
+    "package": "linkedom",
+    "version": "0.18.12",
+    "path": "tools/vendor/linkedom.js",
+    "license": "tools/vendor/linkedom.LICENSE",
+    "sha256": "196efeb17c260e001979dbc54a3c30e701a881c6e8a3eedaddc5ad83c99ee5ff"
+  }
+]
