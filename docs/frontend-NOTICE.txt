@@ -1,0 +1,5 @@
+Hash Frog frontend builds on the original Hash Frog source (MIT).
+Runtime libraries: ethers 6.13.5 (MIT; see vendor/ethers.LICENSE.md), WalletConnect Ethereum Provider and dependencies (MIT / Apache-2.0), node-qrcode (MIT).
+Better Interface design reference: Copyright (c) 2026 Jakub Krehel (MIT), commit 267330e1adfc66a718fb65fa6918c1f06d0a689e.
+Documentation method adapted from Impeccable, Copyright 2025 Paul Bakaus (Apache-2.0), commit 9d715cc4f5564a990ca8345abfdd5df6dc9b41c8.
+See docs/design-reference-LICENSE.txt in the source repository for design reference licenses. No external font or image service is required.

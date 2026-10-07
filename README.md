@@ -1,40 +1,65 @@
-# Hash Frog
+# Hash Frog · Launch 892
 
-Browser proof-of-work NFTs, the standard HFROG launch token, an IMD fee hook, a burn vault, and staking. Solidity 0.8.26 / Cancun. No owner, admin, proxy, upgrade, pause, arbitrary call, or rescue mechanism exists in the application contracts.
+A static, wallet-connected site for the existing Ethereum mainnet launch. The frontend lives in `site/`; its Vite toolchain and pinned npm lockfile live in `web/`. **Publish `dist/` directly**: it contains the finished production export, local runtime assets, WebGPU shader and WASM miner. No backend or contract deployment is needed.
 
-**Delivery status:** implemented and locally tested. No mainnet deployment or hosted production URL is claimed. This checkout contains no verified IMD address, launch factory configuration, signing capability, hosting destination, or independent reviewer attestation. `launch.parameters.json` is a preparation record, not a factory-issued manifest. `site/config.json` deliberately has no hook address; the site shows this state and disables transactions. The mainnet fork rehearsal is supplied but has not run against the actual launch inputs. See [deployment and operations](docs/DEPLOYMENT.md) and [review status](docs/SECURITY.md).
+The seven hash routes are Mine, Gallery (with `#frog/ID` details), Trade, Burn, Vault, Stake and Stats. Public reads work without a wallet. Transactions use an injected EIP-1193/EIP-6963 wallet or the bundled WalletConnect adapter. Wallet account and network changes clear signing/mining state. All addresses originate from the pinned deployment or immutable getters on its hook; see [verification](docs/mainnet-verification.json) and [deployment input](docs/launch-deployment.json).
 
-## Reproduce offline
+**Publication status:** production export delivered; no durable hosting destination was supplied, so external publication is not claimed. The local production preview was served and browser-tested. WalletConnect requires the site operator’s public project ID in `site/config.json` (`walletConnectProjectId`); the provided inputs contain none. Its adapter, QR pairing and disconnect flow are included, but pairing is unverified and the UI explains its unconfigured state. Injected wallet flows were exercised on a local fork.
 
-All contract and browser dependencies are ordinary vendored files. No package install, submodules, CDN, compiler binary, FFI, filesystem cheatcode permission, or environment variables are needed by the default tests. The Foundry worker must provide the pinned compiler.
+## Install, check, preview and rebuild
 
-```sh
-forge build
-forge test
-forge fmt --check
-node --test test/site/*.test.mjs
-node test/site/integration.mjs
-```
-
-The last command starts an isolated local Anvil instance, deploys the real v4 PoolManager and production contracts, mines a real proof with WASM, and drives the DOM application through wallet connection, gallery, buy/sell, staking, delayed withdrawal, claims, buyback, burn, fee redemption, and ETH flush. It requires the Foundry executables and the artifacts from `forge build`. It neither forks nor sends live transactions. Node 22+ recommended; verified here with Node 24.
-
-The Solidity tests include both IMD currency orderings, all four exact-input/output swap modes, a fresh manager with HFROG-only liquidity, fuzzed fee/reward arithmetic, and stateful accounting invariants. NFT harness setters live only under `test/`; production has no difficulty setter. A hard-coded known-answer proof tests the actual initial difficulty. Tests use `vm.getBlockTimestamp()` around warps to avoid compiler assumptions that a transaction's timestamp is constant.
-
-Run the static site without a build step:
+Use Node 22.18+ (tested with Node 24.21.0) and npm. Run from the repository root:
 
 ```sh
-python3 -m http.server 8080 --directory site
+npm --prefix web ci
+npm --prefix web run typecheck
+npm --prefix web run build
+npm --prefix web test
+npm --prefix web run preview
 ```
 
-HTTPS or localhost is needed for browser GPU support. Every dependency is served locally. Regenerate miner backends and ABI files after relevant changes:
+Preview opens at `http://localhost:4173`. Alternatively, `python3 -m http.server 8080 --directory dist` serves the export without installing anything. Vite uses `base: './'`; hash routing and relative assets also work at a gateway subpath. All art, code, shader and WASM assets are local. Ethereum reads require network access to the two public RPCs in `site/config.json`. WalletConnect additionally contacts its relay.
+
+The build copies public configuration, ABIs and licenses into `dist/`; it never reads private credentials. It has a 4 MiB export budget. The completed submission must additionally fit the 8 MiB packed Git budget. Generated `node_modules`, browser downloads and caches are not deliverables; do not add them, even under nested directories. No ignore file was changed for this task.
+
+## Publish
+
+1. Register a WalletConnect/Reown project for the final HTTPS origin, allow that origin, and set its **public** project ID in `site/config.json`. No private key belongs in this file. The SDK’s [upstream provider documentation](https://github.com/WalletConnect/walletconnect-monorepo/tree/v2.0/providers/ethereum-provider) describes the project ID and connection parameters.
+2. Run typecheck, production build and tests above. Preview the resulting export.
+3. Upload the **contents of `dist/`** to your static host or IPFS gateway. Use HTTPS for wallets, WebGPU and clipboard access; localhost is also a secure context. The host must serve `.wasm` as `application/wasm`, JavaScript as JavaScript, and JSON as JSON. No rewrites or SPA fallback are necessary because routes use fragments.
+4. Verify `/index.html` and a nested gateway path, connect a wallet on chain 1, and request a read-only quote. Keep the source, `web/package.json`, `web/package-lock.json` and complete `dist/` together in the submission. This worker does not modify `.git/` or perform a commit.
+
+Do not run any contract deployment command to publish this site. The legacy contract implementation notes below describe the already deployed system, not a new deployment procedure.
+
+## Validation and live verification
+
+Actual commands, results, design coverage and limitations are recorded in [VALIDATION.md](docs/VALIDATION.md). Machine-readable records: [mainnet](docs/mainnet-verification.json), [browser/fork](docs/browser-validation.json). [DESIGN.md](DESIGN.md) documents the implemented interface.
+
+To repeat the read-only mainnet checks and regenerate the public wiring:
 
 ```sh
-python3 tools/generate-miner.py
-node tools/build-miner.mjs
-python3 tools/export-abi.py
+forge build --out test/scratch/out --cache-path test/scratch/cache
+forge inspect HashFrog storage-layout --json --out test/scratch/out --cache-path test/scratch/cache > test/scratch/storage.json
+node tools/verify-mainnet.mjs
+npm --prefix web run build
 ```
 
-`tools/vendor/wabt.cjs` is the pinned WAT compiler; the delivered `.wasm` is already built. No compilation is needed in a visitor's browser. The WGSL and WAT generators use the same Keccak permutation, independently checked against the vendored ethers implementation. GPU initialization includes a production-difficulty known-answer test. A GPU-less workspace cannot attest to a hardware GPU run; WASM, CPU proof validation and DOM integration are covered locally.
+The script compares canonical Keccak ABI hashes for HFROG and HashFrogHook with the pinned attestation and compares all five ABIs with compiled artifacts when present. It also compares application runtimes against compiled source after masking immutable slots, and reads immutable companion addresses, current target, rolling free slots, a nonzero FrogRouter buy quote, and a fake mint using `eth_call` with exactly 0.0019 ETH. The fake proof was rejected with `InvalidProof`, and the exact returned bytes are covered by the UI error-decoding tests.
+
+At the recorded block, zero frogs had been minted. Ordinary `tokenURI(1)` correctly reverted `ERC721NonexistentToken`. The sample image was obtained by calling **the deployed NFT** with temporary RPC state overrides for owner and genesis seed. This was a read-only renderer check, not a mint, and is labeled as a sample in the site. See [sample metadata](docs/sample-tokenURI.json).
+
+Browser and transaction validation uses Chromium and Anvil. It forks the existing deployed contracts and never deploys contracts:
+
+```sh
+# If Chromium is not already installed, keep the download outside the repository:
+PLAYWRIGHT_BROWSERS_PATH=/tmp/hashfrog-browsers npm --prefix web exec playwright install chromium
+# Point to your installed Chromium executable if different:
+HASHFROG_CHROME=/opt/google/chrome/chrome npm --prefix web run test:browser
+```
+
+This test serves the exact `dist/` files at a `/pond/` subpath, then changes only the test browser’s config response to a local fork RPC. A local test account receives test IMD through a reversible fork storage edit. All funds, minting, approvals, swaps, burns, staking and time travel in this check exist only on that local fork. It requires public RPC access for the initial fork and a local free TCP port 18546. Its output does not establish mainnet transaction success or hardware WebGPU behavior.
+
+The preserved miner tests independently check 100 Keccak vectors, the known launch-difficulty proof, strict target bounds, packed input ordering and GPU buffer layout. Solidity sources, build configuration and existing dependencies are unchanged.
 
 ## Contracts and launch wiring
 

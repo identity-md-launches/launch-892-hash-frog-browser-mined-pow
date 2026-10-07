@@ -1,20 +1,29 @@
-import {test} from 'node:test';
-import assert from 'node:assert/strict';
-import fs from 'node:fs';
-import {parseHTML} from '../../tools/vendor/linkedom.js';
-test('unconfigured site is honest and disables every fund-moving action',async()=>{
- const html=fs.readFileSync('site/index.html','utf8');const {document,window}=parseHTML(html);
- globalThis.document=document;globalThis.window=window;
- const originalFetch=globalThis.fetch, originalInterval=globalThis.setInterval;
- globalThis.fetch=async path=>({json:async()=>JSON.parse(fs.readFileSync('site/'+path,'utf8'))});
- globalThis.setInterval=()=>0;
- try {
-  await import('../../site/app.js');await new Promise(r=>setTimeout(r,30));
-  assert.match(document.getElementById('notice').textContent,/ready for launch addresses/);
-  for(const button of document.querySelectorAll('.requires-live')) assert(button.disabled,button.id+' should be disabled');
-  assert.equal(document.getElementById('minted').textContent,'—');
-  await document.getElementById('connect').onclick();
-  assert.match(document.getElementById('notice').textContent,/wallet is required/);
-  assert.equal(document.querySelectorAll('img[src="pond.svg"]').length,1);
- } finally {globalThis.fetch=originalFetch;globalThis.setInterval=originalInterval;}
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
+const dist = new URL("../../dist/", import.meta.url);
+test("production export has relative complete local entry assets and live deployment configuration", () => {
+  const html = fs.readFileSync(new URL("index.html", dist), "utf8");
+  for (const [, url] of html.matchAll(/(?:src|href)="([^"]+)"/g)) {
+    if (url.startsWith("#") || url.startsWith("https:")) continue;
+    assert(url.startsWith("./"), "relative URL: " + url);
+    assert(fs.existsSync(new URL(url, dist)), "missing asset " + url);
+  }
+  const config = JSON.parse(fs.readFileSync(new URL("config.json", dist)));
+  assert.equal(config.chainId, 1);
+  assert.equal(config.launch, 892);
+  assert(config.addresses.FrogRouter);
+  assert.equal(Object.keys(config.codeHashes).length, 7);
+});
+test("static export has no dependency caches, source maps or package archives", () => {
+  function walk(dir) {
+    for (const name of fs.readdirSync(dir)) {
+      assert(!/^(node_modules|\.cache|\.vite)$/.test(name));
+      assert(!/\.(tgz|map)$/.test(name));
+      const child = path.join(dir, name);
+      if (fs.statSync(child).isDirectory()) walk(child);
+    }
+  }
+  walk(dist.pathname);
 });

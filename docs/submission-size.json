@@ -1,0 +1,17 @@
+{
+  "method": "Full-tree Git bundle in a temporary /tmp repository, including unchanged tracked dependencies; original .git remains untouched",
+  "fileCount": 667,
+  "uncompressedFileBytes": 13968763,
+  "packedBundleBytes": 2837660,
+  "limitBytes": 8388608,
+  "productionExportBytes": 3050887,
+  "excluded": [
+    "provided inputs",
+    "generated node_modules/caches",
+    "browser logs",
+    "test/scratch",
+    "contract build output"
+  ],
+  "protectedPathsUnchanged": true,
+  "submodules": 0
+}

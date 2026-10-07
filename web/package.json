@@ -1,0 +1,26 @@
+{
+  "name": "hash-frog-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build --config vite.config.ts && node finish-build.mjs",
+    "typecheck": "tsc --noEmit",
+    "preview": "vite preview --config vite.config.ts --host 0.0.0.0 --port 4173",
+    "test": "node --experimental-strip-types --test ../test/site/*.test.mjs",
+    "verify:mainnet": "node ../tools/verify-mainnet.mjs",
+    "test:browser": "node ../test/site/browser.mjs"
+  },
+  "dependencies": {
+    "@walletconnect/ethereum-provider": "2.23.1",
+    "qrcode": "1.5.4"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@types/qrcode": "1.5.6",
+    "playwright": "1.63.0",
+    "prettier": "3.9.9",
+    "typescript": "5.9.3",
+    "vite": "7.3.1"
+  }
+}

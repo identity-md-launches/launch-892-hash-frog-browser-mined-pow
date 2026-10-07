@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "strict": true,
+    "noEmit": true,
+    "allowJs": true,
+    "checkJs": false,
+    "skipLibCheck": true,
+    "useUnknownInCatchVariables": false,
+    "baseUrl": ".",
+    "paths": {
+      "@walletconnect/ethereum-provider": [
+        "node_modules/@walletconnect/ethereum-provider"
+      ],
+      "qrcode": ["node_modules/@types/qrcode"]
+    }
+  },
+  "include": ["../site/**/*.ts"]
+}

@@ -1,0 +1,85 @@
+{
+  "checkedAt": "2026-10-07T12:20:19.763Z",
+  "chainId": 1,
+  "sourceCommit": "6ab918606c37cd353db6128b2c3e834082324af6",
+  "abiHashes": {
+    "HFROG": "38880b8e56d42ce900f744a7908c7139632a49f1c3f33385c64ceaed29d37bee",
+    "HashFrogHook": "133c217613f9c11148aa6cbb43242b961cd4abc78b82a21a6df23520483697ef"
+  },
+  "checks": {
+    "target": "110427941548649020598956093796432407239217743554726184882600387580788735",
+    "lastSeed": "0xf5bcb75fd0ca54493e23441242a075cbcecf00b4111d9d2a509623a27cccacf3",
+    "freeSlots": "60",
+    "nextSlotAt": "0",
+    "totalMinted": "0",
+    "buyQuote": {
+      "inputIMD": "1000000000000000000",
+      "outputHFROG": "296692620187251687997880"
+    },
+    "fakeMint": {
+      "nonce": "0",
+      "valueWei": "1900000000000000",
+      "refBlock": 26140467,
+      "revert": "InvalidProof",
+      "revertData": "0x09bde339"
+    },
+    "unmintedTokenURIRevert": "ERC721NonexistentToken",
+    "tokenURI": {
+      "mode": "mainnet eth_call, sample genesis seed with temporary state override",
+      "id": 1,
+      "seed": "0xf5bcb75fd0ca54493e23441242a075cbcecf00b4111d9d2a509623a27cccacf3",
+      "name": "Hash Frog #1",
+      "attributes": [
+        {
+          "trait_type": "Skin",
+          "value": "Moss"
+        },
+        {
+          "trait_type": "Eyes",
+          "value": "Wide awake"
+        },
+        {
+          "trait_type": "Adornment",
+          "value": "Dew"
+        },
+        {
+          "trait_type": "Genome",
+          "value": "0xf5bcb75fd0ca54493e23441242a075cbcecf00b4111d9d2a509623a27cccacf3"
+        }
+      ],
+      "keccak": "0x266ba6c6176ed2e6051181922b7f826b96b6c894fe2555e2bd87195448705a1e"
+    }
+  },
+  "limitations": [
+    "No live minted token was available. Sample tokenURI uses eth_call state overrides on the deployed NFT; no state persisted and no NFT was minted."
+  ],
+  "blockNumber": 26140468,
+  "blockHash": "0xd078c920b2c4cd858817b6c73e0c156b663f100f760af6b075bab11d5d8a165c",
+  "runtimeSourceMatches": {
+    "HashFrogHook": "Compiled runtime matches after masking compiler-listed immutable locations",
+    "HFROG": "Compiled runtime matches after masking compiler-listed immutable locations",
+    "HashFrog": "Compiled runtime matches after masking compiler-listed immutable locations",
+    "FrogStaking": "Compiled runtime matches after masking compiler-listed immutable locations",
+    "FrogRouter": "Compiled runtime matches after masking compiler-listed immutable locations"
+  },
+  "addresses": {
+    "HashFrogHook": "0x26e7ee8e1c6c679ca42fdc7dac3b1058fd1120cc",
+    "HFROG": "0xBe349C4E13fc788dB48E11152Ae83c3b902B0b98",
+    "HashFrog": "0x4f4d32E6D6dFa931B5bCd00D7a3052FEfAA3fc37",
+    "FrogStaking": "0xFD622dC60ccc599287841EBa39E8d92139033131",
+    "FrogRouter": "0xd1B570A61D96D0a4cC20306E4Ef7c2C12A61C39A",
+    "IMD": "0xD34a99Bc0f67aE1bbd63C660e6d0b0dd03E263B7",
+    "PoolManager": "0x000000000004444c5dc75cB358380D2e3dE08A90",
+    "Hackathon": "0x56e8C9Bd511718508f7410aEE3E8A693588B38F0",
+    "Team": "0x789C9aDDa69a5880fe70eb4FBC8147F2a54B6363"
+  },
+  "codeHashes": {
+    "HashFrogHook": "0xcacdf614979af58a69fbf391c61ee4f6b8fdcfa273c675423754823ae86560c2",
+    "HFROG": "0xb4a00e67e7ce24bf06af1b1ca3ccc0c1817e0ce58e6a20dbb60c63a3f91e3d5d",
+    "HashFrog": "0x9066f67d110527890bd45ee00ba5fa8c3708e1cb9620a297fa01d9f24cf4bcea",
+    "FrogStaking": "0xd4e0924f5d1c9e8137e25d2f9242060748c7f6ebd94012a3c7b2896b43044e03",
+    "FrogRouter": "0x5ae4f57c635635fe861a4181154da39bcb57fea90ca37df47f6270e6a95967f0",
+    "IMD": "0x79a1ae149d27d4aae006d4dd75cb834222c9623799bbf34359428aaf66fec3bf",
+    "PoolManager": "0x785f1014552b7ce7d5fb7d0c970ca60edee94fd00425d7ca21609acac7ce1293"
+  }
+}

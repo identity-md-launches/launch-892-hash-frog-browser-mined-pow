@@ -1,0 +1,67 @@
+{
+  "date": "2026-10-07T12:22:14.462Z",
+  "checks": [
+    "All seven hash views reflow at 1440, 768, 390 and 320 px, with one visible h1 and no page overflow.",
+    "Disconnected live quote, exact minimum display and invalid-amount inline error.",
+    "Native wallet dialog Escape dismissal and focus restoration.",
+    "Mine page at CSS 200% zoom and RTL mirror has no page overflow.",
+    "Injected wallet connection, wrong-network gate and switch to Ethereum.",
+    "Production browser worker finds a proof and mints against deployed NFT code on the fork.",
+    "tokenURI gallery card opens frog detail with traits and owner.",
+    "Buy HFROG with exact allowance and quote-bound minimum through FrogRouter.",
+    "Stake HFROG with an exact approval.",
+    "Sell HFROG for IMD through FrogRouter.",
+    "Claim IMD and start the 24-hour delay; early withdrawal is disabled.",
+    "Withdraw matured HFROG after the simulated 24-hour countdown.",
+    "Permissionless vault buyback and live 60-second cooldown gate.",
+    "Owned frog selector, vault-share preview, explicit burn acknowledgement and permanent burn.",
+    "Mint, ETH payout, rewards and price statistics refresh after transactions.",
+    "Wallet chain changes clear account state and disable fund-moving controls.",
+    "No uncaught browser errors, static resource failures, or axe WCAG A/AA violations in the seven main views."
+  ],
+  "widths": [
+    1440,
+    768,
+    390,
+    320
+  ],
+  "axe": [
+    {
+      "route": "mine",
+      "violations": []
+    },
+    {
+      "route": "gallery",
+      "violations": []
+    },
+    {
+      "route": "trade",
+      "violations": []
+    },
+    {
+      "route": "burn",
+      "violations": []
+    },
+    {
+      "route": "vault",
+      "violations": []
+    },
+    {
+      "route": "stake",
+      "violations": []
+    },
+    {
+      "route": "stats",
+      "violations": []
+    }
+  ],
+  "consoleErrors": [],
+  "resourceFailures": [],
+  "limitations": [
+    "WalletConnect pairing requires a project ID and an external wallet; not exercised.",
+    "No physical GPU or hardware wallet tested. Browser miner exercised WASM fallback.",
+    "All write interactions use a local mainnet fork, with a funded IMD test account. No live transactions or contract deployments."
+  ],
+  "minerBackend": "WASM / CPU",
+  "transactionCount": 12
+}
