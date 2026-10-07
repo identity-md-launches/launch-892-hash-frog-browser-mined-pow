@@ -1,0 +1,32 @@
+{
+  "kind": "univ4_hook",
+  "hook": {
+    "contract": "HashFrogHook",
+    "constructorArgs": [
+      "$poolManager",
+      "$token",
+      "0xd34a99bc0f67ae1bbd63c660e6d0b0dd03e263b7",
+      "60"
+    ],
+    "permissions": [
+      "beforeInitialize",
+      "beforeSwap",
+      "afterSwap",
+      "beforeSwapReturnDelta",
+      "afterSwapReturnDelta"
+    ]
+  },
+  "token": {
+    "contract": "HFROG",
+    "name": "HFROG",
+    "symbol": "HFROG",
+    "decimals": 18
+  },
+  "pool": {
+    "pairedCurrency": "0xd34a99bc0f67ae1bbd63c660e6d0b0dd03e263b7",
+    "fee": 12500,
+    "tickSpacing": 60,
+    "initialPrice": "79228162514264337593543950336"
+  },
+  "notes": "Technical description for Ethereum mainnet. Initial price assumption: 1 HFROG = 1 IMD, matching the existing fixture and rehearsal; the brief specifies no price. Both assets have 18 decimals, so sqrtPriceX96 is 2^96 with currencies sorted by address. The hook binds exactly this pair, fee, spacing and its own address. Its five permissions encode 0x20cc; enabled callbacks require PoolManager. Deploy the no-argument HFROG token before the hook and initialize the pool atomically with hook deployment. HashFrogHook's constructor creates FrogStaking, FrogRouter and HashFrog (NFT plus burn vault); their addresses are exposed by staking(), router() and frog(). Application contracts have no owner, admin, upgrade or pause.\nHash Frog (HASHFROG) has 2,000 lifetime IDs, never reused after burns. mine(nonce, expectedSeed, refBlock) requires keccak256(abi.encodePacked(minter, nonce, lastSeed, blockhash(refBlock))) below target, the current lastSeed and one of the previous 64 blocks. Genesis is keccak256('Hash Frog / a pond begins / genesis v1'); subsequent seeds are accepted proof hashes. One mint per transaction costs exactly 0.0019 ETH. Every 8 mints retarget toward 480 seconds, bounded to 4x harder or 2x easier. A rolling 60-mint/3,600-second limit reverts HourFull. ETH calls split 85% to 0x56e8c9bd511718508f7410aee3e8a693588b38f0 and 15% to 0x789C9aDDa69a5880fe70eb4FBC8147F2a54B6363 with 100,000 gas each; failures become fixed-recipient credits retried by anyone via flush(). FrogArt generates original on-chain SVG/JSON, seed-derived rares and unique genome mosaics; traits can be ground by miners.\nThe hook charges 1.5% in IMD on buys and sells in addition to the 1.25% LP fee, with no anti-snipe. Exact-input buys charge within the IMD budget; exact-output sells gross up net IMD by 150/9850. Other modes charge 150/10000 of the actual pool IMD delta. Specified-IMD partial fills revert. Fees mint ERC-6909 IMD claims: 60% to staking, 25% to the NFT/vault, and the remainder (15% plus rounding dust) to the fixed team recipient. Anyone can redeem claims to their fixed destinations; burns, buybacks and reward claims redeem automatically.\nBurns pay the holder integer shares of vault HFROG and unswapped IMD, including pending fees, divided by totalMinted minus totalBurned before the burn. Unminted frogs have no share; the sole live holder can empty the current vault. There is no vault withdrawal/rescue. Permissionless buyback spends at most 100 IMD per successful call, at least 60 seconds apart, through the same pool; bought HFROG stays in the vault. It also requires a 30-minute price history, a 95% average-price output floor, deadline and slippage bounds.\nStaking uses an IMD accumulator with fractional carry, claims anytime, and queues no-staker fees for the first stake. Exiting principal stops earning immediately and unlocks after 24 hours; another exit request restarts the delay for all pending principal.\nThe static site implements WebGPU mining with WASM/CPU fallback, hashrate/difficulty/ETA/free-slot displays, minting, tokenURI gallery, HFROG/IMD trading, burn quotes, buyback, staking and payout statistics. Live addresses are not configured. Mainnet fork rehearsal including the real PoolManager and hackathon ETH acceptance, independent review, actual deployment and HTTPS publication remain outstanding; this manifest does not attest to them."
+}
